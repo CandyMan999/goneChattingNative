@@ -1,12 +1,14 @@
 import React, { useRef, useContext, useReducer, useEffect } from "react";
-import { View, SafeAreaView, Linking } from "react-native";
+import { Camera } from "expo-camera";
+import { View, SafeAreaView, Linking, Alert } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { WebView } from "react-native-webview";
 import Constants from "expo-constants";
 import queryString from "query-string";
-import { ApolloProvider, Subscription } from "react-apollo";
+import { ApolloProvider } from "react-apollo";
 import { ApolloClient } from "apollo-client";
 import { WebSocketLink } from "apollo-link-ws";
+import * as Location from "expo-location";
 
 import { InMemoryCache } from "apollo-cache-inmemory";
 import Context from "./context";
@@ -30,6 +32,45 @@ const App = () => {
   const webViewRef = useRef(null);
   const intialState = useContext(Context);
   const [state, dispatch] = useReducer(reducer, intialState);
+
+  useEffect(() => {
+    checkCameraPermission();
+    checkLocationPermission();
+  }, []);
+
+  const checkCameraPermission = async () => {
+    const { status } = await Camera.requestCameraPermissionsAsync();
+    if (status !== "granted") {
+      Alert.alert(
+        "Camera Permission",
+        "App needs access to your camera",
+        [
+          { text: "Cancel", style: "cancel" },
+          { text: "OK", onPress: openAppSettings },
+        ],
+        { cancelable: false }
+      );
+    }
+  };
+
+  const checkLocationPermission = async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
+      Alert.alert(
+        "Location Permission",
+        "App needs access to your location",
+        [
+          { text: "Cancel", style: "cancel" },
+          { text: "OK", onPress: openAppSettings },
+        ],
+        { cancelable: false }
+      );
+    }
+  };
+
+  const openAppSettings = () => {
+    Linking.openSettings();
+  };
 
   const handleNavigationStateChange = async (newNavState) => {
     const { url } = newNavState;

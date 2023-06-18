@@ -1,5 +1,13 @@
 {
   "expo": {
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow GoneChatting to access your camera."
+        }
+      ]
+    ],
     "name": "goneChattingNative",
     "slug": "goneChattingNative",
     "version": "1.0.0",
@@ -15,9 +23,20 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "buildNumber": "1.2",
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "We need to access your location for better app functionality."
+      },
+      "bundleIdentifier": "com.jalewis1221.goneChattingNative"
     },
     "android": {
+      "permissions": [
+        {
+          "name": "android.permission.ACCESS_FINE_LOCATION",
+          "reason": "We need to access your location for better app functionality."
+        }
+      ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
