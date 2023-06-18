@@ -6,9 +6,15 @@
         {
           "cameraPermission": "Allow GoneChatting to access your camera."
         }
+      ],
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Allow Gone Chatting to use Face ID."
+        }
       ]
     ],
-    "name": "goneChattingNative",
+    "name": "Gone Chatting",
     "slug": "goneChattingNative",
     "version": "1.0.0",
     "orientation": "portrait",
