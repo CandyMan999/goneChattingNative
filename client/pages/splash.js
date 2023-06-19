@@ -1,8 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import Icon from "../assets/Icon.png";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SplashScreen = ({ navigation }) => {
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    getToken();
+  }, []);
+
+  const getToken = async () => {
+    try {
+      const value = await AsyncStorage.getItem("@GoneChatting");
+      if (value !== null) {
+        setToken(value);
+      }
+    } catch (e) {
+      console.log("err getting token in client: ", e);
+    }
+  };
+
   const handleGoogleSignIn = () => {
     // Handle sign-in with Google button press
   };
@@ -11,22 +29,27 @@ const SplashScreen = ({ navigation }) => {
     navigation.navigate("Face");
   };
 
-  const handlePilgrimSignIn = () => {};
+  const handlePilgrimSignIn = () => {
+    navigation.navigate("Login");
+  };
 
   return (
     <View style={styles.container}>
       <Image source={Icon} style={styles.logo} />
       <Text style={styles.slogan}>Never Catch A Catfish</Text>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={handleFaceSignIn}>
-          <Text style={styles.buttonText}>Sign in with Facial Recognition</Text>
-        </TouchableOpacity>
+        {token && (
+          <TouchableOpacity style={styles.button} onPress={handleFaceSignIn}>
+            <Text style={styles.buttonText}>
+              Sign in with Facial Recognition
+            </Text>
+          </TouchableOpacity>
+        )}
         <TouchableOpacity style={styles.button} onPress={handleGoogleSignIn}>
           <Text style={styles.buttonText}>Sign in with Google</Text>
         </TouchableOpacity>
-
         <TouchableOpacity style={styles.button} onPress={handlePilgrimSignIn}>
-          <Text style={styles.buttonText}>Sign in like a Pilgrim</Text>
+          <Text style={styles.buttonText}>Sign in</Text>
         </TouchableOpacity>
       </View>
     </View>

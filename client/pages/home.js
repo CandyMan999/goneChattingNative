@@ -1,13 +1,54 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 import { View, SafeAreaView, Linking } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { WebView } from "react-native-webview";
 import Constants from "expo-constants";
 import queryString from "query-string";
+import { Camera } from "expo-camera";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Home = () => {
+  const [token, setToken] = useState("");
   const webViewRef = useRef(null);
+
+  useEffect(() => {
+    getToken();
+    checkCameraPermission();
+  }, []);
+
+  const getToken = async () => {
+    try {
+      const value = await AsyncStorage.getItem("@GoneChatting");
+      if (value !== null) {
+        setToken(value);
+      }
+    } catch (e) {
+      console.log("err getting token in client: ", e);
+    }
+  };
+
+  const checkCameraPermission = async () => {
+    const { status } = await Camera.requestCameraPermissionsAsync();
+
+    if (status !== "granted") {
+      Alert.alert(
+        "Camera Permission",
+        "Gone Chatting needs access to your camera to send Video Messages",
+        [
+          {
+            text: "Cancel",
+            style: "cancel",
+          },
+          { text: "OK", onPress: openAppSettings },
+        ],
+        { cancelable: false }
+      );
+    }
+  };
+  const openAppSettings = () => {
+    Linking.openSettings();
+  };
 
   const handleNavigationStateChange = async (newNavState) => {
     const { url } = newNavState;
@@ -44,7 +85,7 @@ const Home = () => {
         <StatusBar style="light" />
         <WebView
           ref={webViewRef}
-          source={{ uri: "https://www.gonechatting.com" }}
+          source={{ uri: `https://www.gonechatting.com/?token=${token}` }}
           style={{ flex: 1 }}
           onNavigationStateChange={handleNavigationStateChange}
         />

@@ -18,7 +18,7 @@ const FacialRecognitionComponent = ({ navigation }) => {
           {
             text: "OK",
             onPress: () => {
-              navigation.navigate("Splash"); // Navigate to the splash screen
+              navigation.navigate("Camera"); // Navigate to the splash screen
             },
           },
         ],

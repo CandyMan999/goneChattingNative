@@ -1,9 +1,29 @@
-import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import React, { useEffect } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+  Linking,
+} from "react-native";
 import * as Location from "expo-location";
 
 const LocationPermissionScreen = ({ navigation }) => {
+  useEffect(() => {
+    checkLocationPermission();
+  }, []);
+
   const checkLocationPermission = async () => {
+    const { status } = await Location.getForegroundPermissionsAsync();
+
+    if (status === "granted") {
+      // Camera permission granted, navigate to the Location screen
+      navigation.navigate("Home");
+    }
+  };
+
+  const requestLocationPermission = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status === "granted") {
       // Location permission granted, navigate to the Home screen
@@ -31,7 +51,7 @@ const LocationPermissionScreen = ({ navigation }) => {
   };
 
   const handlePress = () => {
-    checkLocationPermission();
+    requestLocationPermission();
   };
 
   return (

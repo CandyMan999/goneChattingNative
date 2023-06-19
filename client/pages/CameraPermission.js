@@ -1,9 +1,29 @@
 import React, { useEffect } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+  Linking,
+} from "react-native";
 import { Camera } from "expo-camera";
 
 const CameraPermissionScreen = ({ navigation }) => {
+  useEffect(() => {
+    checkCameraPermission();
+  }, []);
+
   const checkCameraPermission = async () => {
+    const { status } = await Camera.getCameraPermissionsAsync();
+
+    if (status === "granted") {
+      // Camera permission granted, navigate to the Location screen
+      navigation.navigate("Location");
+    }
+  };
+
+  const requestCameraPermission = async () => {
     const { status } = await Camera.requestCameraPermissionsAsync();
 
     if (status === "granted") {
@@ -18,7 +38,7 @@ const CameraPermissionScreen = ({ navigation }) => {
           {
             text: "Cancel",
             style: "cancel",
-            onPress: navigation.navigate("Home"),
+            onPress: navigation.navigate("Location"),
           },
           { text: "OK", onPress: openAppSettings },
         ],
@@ -31,7 +51,7 @@ const CameraPermissionScreen = ({ navigation }) => {
   };
 
   const handlePress = () => {
-    checkCameraPermission();
+    requestCameraPermission();
   };
 
   return (
