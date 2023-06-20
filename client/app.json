@@ -14,6 +14,7 @@
         }
       ]
     ],
+    "scheme": "com.googleusercontent.apps.822502244020-3p6qcigklemcl51eb0083hf24j6g24pd",
     "name": "Gone Chatting",
     "slug": "goneChattingNative",
     "version": "1.0.0",
@@ -21,7 +22,7 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/Jitsi.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -29,11 +30,13 @@
       "**/*"
     ],
     "ios": {
-      "buildNumber": "1.3",
+      "buildNumber": "1.5",
       "supportsTablet": true,
       "infoPlist": {
+        "CFBundleDisplayName": "Gone Chatting",
         "NSLocationWhenInUseUsageDescription": "We need to access your location for better app functionality.",
         "NSFaceIDUsageDescription": "Quickly login with saved credentials"
+       
       },
       "bundleIdentifier": "com.jalewis1221.goneChattingNative"
     },

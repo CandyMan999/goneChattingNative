@@ -18,6 +18,7 @@ import {
   SplashScreen,
   FacialRecognitionScreen,
   LoginScreen,
+  JitsiScreenPage,
 } from "./pages";
 export const WS_URL = `wss://aol-is-back.herokuapp.com/graphql`;
 
@@ -45,6 +46,7 @@ const App = () => {
         <Context.Provider value={{ state, dispatch }}>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Splash" component={SplashScreen} />
+            <Stack.Screen name="Jitsi" component={JitsiScreenPage} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Face" component={FacialRecognitionScreen} />
             <Stack.Screen name="Camera" component={CameraPermissionScreen} />

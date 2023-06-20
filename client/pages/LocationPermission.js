@@ -19,7 +19,7 @@ const LocationPermissionScreen = ({ navigation }) => {
 
     if (status === "granted") {
       // Camera permission granted, navigate to the Location screen
-      navigation.navigate("Home");
+      navigation.navigate("Jitsi");
     }
   };
 
@@ -27,7 +27,7 @@ const LocationPermissionScreen = ({ navigation }) => {
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status === "granted") {
       // Location permission granted, navigate to the Home screen
-      navigation.navigate("Home");
+      navigation.navigate("Jitsi");
     }
     if (status !== "granted") {
       Alert.alert(
@@ -37,7 +37,7 @@ const LocationPermissionScreen = ({ navigation }) => {
           {
             text: "Cancel",
             style: "cancel",
-            onPress: navigation.navigate("Home"),
+            onPress: navigation.navigate("Jitsi"),
           },
           { text: "OK", onPress: openAppSettings },
         ],

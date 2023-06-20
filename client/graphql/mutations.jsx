@@ -65,6 +65,38 @@ export const GOOGLE_LOGIN_MUTATION = gql`
     }
   }
 `;
+export const GOOGLE_APP_LOGIN_MUTATION = gql`
+  mutation ($googleId: String!) {
+    googleAppLogin(googleId: $googleId) {
+      token
+      user {
+        _id
+        name
+        isLoggedIn
+        username
+        pictures {
+          _id
+          url
+          publicId
+        }
+        location {
+          coordinates
+        }
+        email
+        intro
+        sex
+        age
+        occupation
+        singleTime
+        drink
+        smoke
+        marijuana
+        drugs
+        kids
+      }
+    }
+  }
+`;
 
 export const SIGNUP_MUTATION = gql`
   mutation ($username: String!, $email: String!, $password: String!) {
